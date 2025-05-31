@@ -24,7 +24,7 @@ def find_largest_ellipse(frame):
     biggest_real_ellipse = None
     biggest_index = 0
     for i, x in enumerate(ellipses):
-        if x is not None:
+        if x is not None and contour_areas[i] != 0:
             area = np.pi*max(x[1])*min(x[1])/4 #calculate area of the ellipse from the major and minor axes
             if area/contour_areas[i] > 0.9 and area/contour_areas[i] < 1.1: #threshholds chosen arbitrary TODO: fine tune
                 if biggest_real_ellipse is None:
@@ -39,6 +39,9 @@ def find_largest_ellipse(frame):
 
 '''returns a tuple of the angle of incidence and the angle at which the ellipse is slanted.'''
 def get_target_data(target):
+    if target is None:
+        # print("no target visible")
+        return
     theta = math.acos(np.min(target[1])/np.max(target[1])) # angle of incidence, measured from the normal. radians
     angle_of_ellipse = math.radians(target[2]) # radians
     #focal_length = 0.00474 #meters TODO: is this correct?
