@@ -1,7 +1,7 @@
 import cv2
 from Image_Processing import *
 
-cap = cv2.VideoCapture("/dev/video10", cv2.CAP_V4L2)
+cap = cv2.VideoCapture("/dev/video17", cv2.CAP_V4L2)
 
 if not cap.isOpened():
     print("Failed to open video capture")
