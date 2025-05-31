@@ -2,11 +2,11 @@ import cv2
 from Image_Processing import *
 
 #cv2.namedWindow("preview")
-cam = cv2.VideoCapture("/dev/video10")
+cap = cv2.VideoCapture("/dev/video10")
 
-while True:
+while cap.isOpened():
     #process camera inputs
-    ret, frame = cam.read()
+    ret, frame = cap.read()
     #cv2.imshow("preview", frame)
     data = get_target_data(find_largest_ellipse(frame))
     if data is not None:
@@ -14,6 +14,6 @@ while True:
     key = cv2.waitKey(20)
     if key == 27: # exit on ESC
         break
-
+print("cap not open")
 #cv2.destroyWindow("preview")
-cam.release()
+cap.release()
