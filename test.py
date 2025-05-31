@@ -2,7 +2,7 @@ import cv2
 from Image_Processing import *
 
 #cv2.namedWindow("preview")
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture("/dev/video10")
 
 while True:
     #process camera inputs
