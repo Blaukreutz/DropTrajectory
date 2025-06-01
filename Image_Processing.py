@@ -50,21 +50,44 @@ def get_target_data(target):
     return (theta, angle_of_ellipse)
 
 #test purposes
+# if __name__ == '__main__':
+#     image = cv2.imread("Ellipses.png")
+#     filtered_ellipses = [find_largest_ellipse(image)]
+
+#     print(get_target_data(filtered_ellipses[0]))
+
+#     test = np.zeros(image.shape, np.uint8)
+#     box_points = [None]*len(filtered_ellipses)
+#     for i, x in enumerate(filtered_ellipses):
+#         if x is not None:
+#             box_points[i] = cv2.boxPoints(x).astype(np.int32)
+#         #print(box_points)
+#     for y in box_points:
+#         if y is not None:
+#             cv2.fillConvexPoly(img=test, points=y, color=(255, 0, 0))
+#             cv2.imshow("test", test)
+
+#     cv2.waitKey(0)
+
 if __name__ == '__main__':
-    image = cv2.imread("Ellipses.png")
-    filtered_ellipses = [find_largest_ellipse(image)]
+    cap = cv2.VideoCapture(0)
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret or frame is None:
+            print("Failed to read frame")
+            break
 
-    print(get_target_data(filtered_ellipses[0]))
+        filtered_ellipses = [find_largest_ellipse(frame)]
+        print(get_target_data(filtered_ellipses[0]))
 
-    test = np.zeros(image.shape, np.uint8)
-    box_points = [None]*len(filtered_ellipses)
-    for i, x in enumerate(filtered_ellipses):
-        if x is not None:
-            box_points[i] = cv2.boxPoints(x).astype(np.int32)
-        #print(box_points)
-    for y in box_points:
-        if y is not None:
-            cv2.fillConvexPoly(img=test, points=y, color=(255, 0, 0))
-            cv2.imshow("test", test)
-
-    cv2.waitKey(0)
+        box_points = [None]*len(filtered_ellipses)
+        for i, x in enumerate(filtered_ellipses):
+            if x is not None:
+                box_points[i] = cv2.boxPoints(x).astype(np.int32)
+            #print(box_points)
+        for y in box_points:
+            if y is not None:
+                cv2.fillConvexPoly(img=frame, points=y, color=(255, 0, 0))
+        cv2.imshow("test", frame)
+        cv2.waitKey(1)
