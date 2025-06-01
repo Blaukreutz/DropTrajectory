@@ -5,7 +5,7 @@ import pigpio
 from time import sleep
 
 #accessing the camera feed
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture("/dev/video17", cv2.CAP_V4L2)
 
 pi = pigpio.pi()  # Connect to pigpiod
 
